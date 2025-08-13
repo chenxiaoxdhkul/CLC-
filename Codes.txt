@@ -1,0 +1,72 @@
+﻿Codes for Death Circumstances-Number of Deaths by Circumstances-CLC in Canada
+
+
+
+
+IF CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "tuberculosis")
+   OR CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "phthisis")
+THEN "Tuberculosis"
+ELSEIF CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "pneumonia")
+THEN "Pneumonia"
+ELSEIF CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "acute arthritis")
+THEN "Acute Arthritis"
+ELSEIF CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "unspecified illness")
+THEN "Unspecified Illness"
+ELSEIF CONTAINS(LOWER([_source/lifecycle/death/0/detail/circumstances]), "malaria")
+THEN "Malaria"
+ELSE "Unknown"
+END
+
+
+
+
+
+
+Codes for Categorized Cause of Death
+
+
+
+
+IF CONTAINS(LOWER([Detailed Cause of Death]), "air raid") THEN "Likely Air Raid"
+
+
+ELSEIF CONTAINS(LOWER([Detailed Cause of Death]), "killed") THEN "Likely Combat"
+
+
+ELSEIF CONTAINS(LOWER([Detailed Cause of Death]),"suicide") THEN "Suicide"
+
+
+ELSEIF (
+    CONTAINS(LOWER([Detailed Cause of Death]), "tuberculosis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "arthritis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "malaria") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "phthisis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "pneumonia") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "insanity") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "dysentery") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "gastritis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "arterial sclerosis and apoplexy") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "perforated gastric ulcer") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "biliary") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "bronchitis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "cardiac") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "cerebral") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "dropsy") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "paralysis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "heart failure") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "peritonitis") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "surgery") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "illness") OR
+    CONTAINS(LOWER([Detailed Cause of Death]), "septicaemia")
+) THEN "Disease"
+
+
+ELSEIF CONTAINS(LOWER([Detailed Cause of Death]), "unknown") AND 
+       CONTAINS(LOWER([Region of Death]), "france") THEN "Unknown in France"
+
+
+ELSEIF ISNULL([Detailed Cause of Death]) OR [Detailed Cause of Death] = "" THEN "Unspecified"
+
+
+ELSE [Detailed Cause of Death]
+END
